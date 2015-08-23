@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Razi Shaban</title>
+    <description>Swarthmore 2016 CS/Linguistics
+</description>
+    <link>https://www.razi.xyz/</link>
+    <atom:link href="https://www.razi.xyz/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 23 Aug 2015 00:57:57 -0400</pubDate>
+    <lastBuildDate>Sun, 23 Aug 2015 00:57:57 -0400</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Reflections on SemEval2015</title>
+        <description>&lt;p&gt;As a part of the Natural Language Processing class I took at Swarthmore last fall (2014), teams of students competed to build machine-learning models that could accurately predict the sentiment of Twitter data for &lt;a href=&quot;http://alt.qcri.org/semeval2015/&quot;&gt;SemEval 2015&lt;/a&gt;, the International Workshop on Semantic Evaluation. Given that I spent a summer building commercial machine classifiers, I’ve had some time to reflect on the first machine learning model I built.&lt;/p&gt;
+
+&lt;p&gt;Given that we had been exposed to natural language processing for only a couple months, our results were fairly impressive: our best model was predicted sentiment with an F-score of 57.2, which is pretty close to the industry standard. The winners of SemEval 2015, out of &lt;a href=&quot;http://alt.qcri.org/semeval2015/cdrom/pdf/SemEval078.pdf&quot;&gt;over 40 teams&lt;/a&gt;, was Bauhaus University, Weimar with an &lt;a href=&quot;http://alt.qcri.org/semeval2015/cdrom/pdf/SemEval097.pdf&quot;&gt;F-score of 64.84&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We weren’t competing for the top, though. I worked with a friend, Alec Pillsbury, and we wanted to tease apart the differences between the different pre-processing techniques and models that we had learned about. We found our way to scikit-learn, which allowed us to easily swap out models and tweak parameters for our bag-of-words feature (&lt;a href=&quot;http://billchambers.me/tutorials/2015/01/14/python-nlp-cheatsheet-nltk-scikit-learn.html&quot;&gt;cheatsheet&lt;/a&gt; that I wish we’d had around). This made it easy for us to run a whole bunch of tests and spit out a big wall of numbers:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/semeval_table2.png&quot; alt=&quot;Table two from our write-up&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;These numbers are cross-val results for different configurations of a bag-of-words model trained on 8111 tagged tweets.&lt;/p&gt;
+
+&lt;p&gt;We were a little pressed for time putting together our write-up (finals), so I didn’t spend too much time worrying about the presentation of data. Each row represents a different configuration (bigram, bigram + trigram, etc.) of our machine-learning models, and each column represents a different performance metric. The bolded numbers represent the local maximums, the configurations of our bag-of-words model that gave the best metrics.&lt;/p&gt;
+
+&lt;p&gt;Our most significant finding, in retrospect, was that negative models tended to perform better when bag-of-words weighted by presence rather than frequency, which isn’t very surprising for a couple reasons.&lt;/p&gt;
+
+&lt;p&gt;Other than that, it seemed that little we did improved the models or affected it at all. We tried some lazy bootstrapping, adding 50 thousand tweets from the &lt;a href=&quot;https://github.com/felipebravom/StaticTwitterSent/tree/master/extra/Sentiment140-Lexicon-v0.1&quot;&gt;Sentiment140 corpus&lt;/a&gt;, but found that it actually hurt our results, probably because it’s a dirty dataset. We clearly see elsewhere danger of noise in a sparse dataset: almost every single bigram configuration performed better than its trigram configuration.&lt;/p&gt;
+
+&lt;p&gt;While I was building models this summer, we spent a fair amount of time discussing feature selection and dataset composition: the most significant ways we could improve the models, we found, were by changing the features selected and cleaning up the data – as well as increasing the size of the training set. That being said, ultimately, our attempts to try different feature sets didn’t lead to any significant breakthroughs, other than that less was more with sparse data. Given that language data tends to be sparse, trigrams tended to hurt our models more than help them. Oh well.&lt;/p&gt;
+
+&lt;!-- [our writeup](https://github.com/rrshaban/misc/blob/master/SemEval-writeup/SemEval_2015.pdf) --&gt;
+</description>
+        <pubDate>Fri, 21 Aug 2015 22:15:20 -0400</pubDate>
+        <link>https://www.razi.xyz/2015/08/21/semeval.html</link>
+        <guid isPermaLink="true">https://www.razi.xyz/2015/08/21/semeval.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>From zero to Hexo: a quick tutorial</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/hexojs/hexo&quot;&gt;Hexo&lt;/a&gt; bills itself as a “A fast, simple &amp;amp; powerful blog framework”, but I was blown away by how quickly I was able to get Hexo up and running. The main issue I had was finding the information I needed all in one place (this has &lt;a href=&quot;https://s1van.github.io/tags/tutorial/&quot;&gt;been&lt;/a&gt; &lt;a href=&quot;http://jdpaton.github.io/2012/11/05/setup-hexo/&quot;&gt;done&lt;/a&gt; &lt;a href=&quot;http://jr0cket.co.uk/2014/04/getting-started-with-hexo---a-modern-static-site-generator.html&quot;&gt;before&lt;/a&gt;, with varying success).&lt;/p&gt;
+
+&lt;p&gt;This tutorial will guide you through a fresh install to deploying a Hexo-powered blog to Heroku, with some discussion of the Hexo workflow I’ve settled into. The official tutorial is &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-hexo&quot;&gt;Installing Hexo&lt;/h3&gt;
+&lt;p&gt;Assuming you have node and npm installed, run &lt;code&gt;npm install -g hexo&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You should now be able to run &lt;code&gt;hexo init blog&lt;/code&gt; to create a folder, &lt;code&gt;blog/&lt;/code&gt;, with &lt;a href=&quot;https://gist.github.com/rrshaban/e90d948a01323f022637&quot;&gt;a whole bunch of files&lt;/a&gt;, the vast majority of which are &lt;a href=&quot;https://hexo.io/hexo-theme-landscape/&quot;&gt;the default theme&lt;/a&gt;. If you’re curious about what these are, check out &lt;a href=&quot;https://hexo.io/docs/setup.html&quot;&gt;the documentation&lt;/a&gt;. &lt;!-- You can see from my footer that I use the [NexT theme](https://github.com/iissnan/hexo-theme-next), which I&#39;ll go over in a later section. --&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;running-hexo-locally&quot;&gt;Running Hexo locally&lt;/h3&gt;
+
+&lt;p&gt;You can now run your &lt;code&gt;hexo server&lt;/code&gt;, probably best in a &lt;a href=&quot;https://github.com/rrshaban/screen_tutorial&quot;&gt;screen&lt;/a&gt; or separate tab.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Open up &lt;a href=&quot;http://localhost:4000/&quot;&gt;localhost:4000&lt;/a&gt; to see a Hello World post with all the important Hexo commands:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code&gt;$ hexo new &quot;My New Post&quot;&lt;/code&gt;
+&lt;code&gt;$ hexo server&lt;/code&gt;
+&lt;code&gt;$ hexo generate&lt;/code&gt;
+&lt;code&gt;$ hexo deploy&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;your-first-post&quot;&gt;Your first post&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;hexo new &lt;span class=&quot;s2&quot;&gt;&amp;quot;My first post&amp;quot;&lt;/span&gt;
+INFO  Created: blog/source/_posts/My-first-post.md&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You can now edit that file in whatever text editor you prefer. Hexo creates a scaffolding for you to start with:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;title: My first post
+date: 2015-07-05 02:58:15
+tags:
+---&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The local Hexo server will automatically detect any changes made to the file, so saving will be enough for you to preview your post on &lt;a href=&quot;http://localhost:4000/&quot;&gt;localhost:4000&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;generate-static-html&quot;&gt;Generate static HTML&lt;/h3&gt;
+
+&lt;p&gt;Running &lt;code&gt;hexo generate&lt;/code&gt; will prompt Hexo to speedily render all of the static files necessary for the blog to &lt;code&gt;public/&lt;/code&gt;. You can use Hexo as a tool to convert Markdown to HTML to run on a basic web server, though I prefer to host my site on Heroku.&lt;/p&gt;
+
+&lt;h3 id=&quot;deploying-to-heroku&quot;&gt;Deploying to Heroku&lt;/h3&gt;
+
+&lt;p&gt;To install the Hexo Heroku deployer, run &lt;code&gt;npm install hexo-deployer-heroku --save&lt;/code&gt;. Then add to your &lt;code&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;deploy:
+  &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;: heroku
+  repo: git@heroku.com:&amp;lt;YOUR_HEROKU_NAME&amp;gt;.git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The default deploy message is &lt;code&gt;Site updated: {{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}&lt;/code&gt;, which works great for me. Now all you’ll need to do to deploy your latest blog to Heroku is run &lt;code&gt;hexo deploy&lt;/code&gt;. I’ve had some issues getting the deployer to recognize change made, so I advise running &lt;code&gt;generate&lt;/code&gt; before you &lt;code&gt;deploy&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To install the Hexo Git deployer, run &lt;code&gt;npm install hexo-deployer-git --save&lt;/code&gt;, and add the following to your &lt;code&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;deploy:
+  type: git
+  repo: &amp;lt;repository url&amp;gt;
+  branch: [branch]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;my-hexo-workflow&quot;&gt;My Hexo workflow&lt;/h3&gt;
+
+&lt;p&gt;At this point, that’s kind of it. The process is pretty straightforward:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;hexo new post&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Edit post.md in SublimeText&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;hexo generate&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;hexo deploy&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;And that’s it!&lt;/p&gt;
+
+&lt;h3 id=&quot;exploring-further&quot;&gt;Exploring further&lt;/h3&gt;
+
+&lt;p&gt;If you’re curious for where to start exploring more about Hexo, jr0cket has put together a &lt;a href=&quot;http://jr0cket.co.uk/developer-guides/hexo-workflow.pdf&quot;&gt;more involved workflow model&lt;/a&gt; and you can check out &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;the Hexo docs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Another little thing I like: when you kill the server with a &lt;code&gt;^C&lt;/code&gt;, Hexo responds with &lt;code&gt;INFO  Catch you later&lt;/code&gt;. I love it.&lt;/p&gt;
+
+&lt;p&gt;Edit: A month after writing this post, I discovered another neat tidbit: &lt;code&gt;hexo list post&lt;/code&gt;. Try it out!&lt;/p&gt;
+</description>
+        <pubDate>Sat, 04 Jul 2015 22:15:20 -0400</pubDate>
+        <link>https://www.razi.xyz/2015/07/04/from-zero-to-hexo-a-quick-tutorial.html</link>
+        <guid isPermaLink="true">https://www.razi.xyz/2015/07/04/from-zero-to-hexo-a-quick-tutorial.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Screen in two minutes</title>
+        <description>&lt;p&gt;I wrote up a quick how-to that I wished I had found when I was first learning screen, instead of having to navigate the &lt;a href=&quot;http://linux.die.net/man/1/screen&quot;&gt;vaguely terrifying documentation&lt;/a&gt; (“Each virtual terminal provides the functions of a DEC VT100 terminal and, in addition, several control functions from the ISO 6429 (ECMA 48, ANSI X3.64) and ISO 2022 standards (e.g. insert/delete line and support for multiple character sets)”).&lt;/p&gt;
+
+&lt;p&gt;You can find my tutorial below or &lt;a href=&quot;https://github.com/rrshaban/screen_tutorial&quot;&gt;on my Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;code&gt;screen&lt;/code&gt; is a super-useful Unix utility because it allows you to run terminal commands without needing to have your terminal window open.&lt;/p&gt;
+
+&lt;p&gt;Think of a screen as a session: you can open a screen, start a script, and then detach from it. The script will keep running in the background, but you can keep doing whatever you were doing without affecting the script. More significantly, if you want to be able to step away from your terminal, or close your laptop, or let a task run overnight without needing you to be connected, use a screen.&lt;/p&gt;
+
+&lt;p&gt;This quick tutorial will walk you through the basic commands necessary to get a screen working without worrying about what’s going on behind the scenes.&lt;/p&gt;
+
+&lt;h3 id=&quot;start-a-screen-session&quot;&gt;Start a screen session&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code&gt;$ screen -S &amp;lt;NAME&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;run-whatever-code-you-want&quot;&gt;Run whatever code you want&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code&gt;$ ruby download_the_entire_internet.rb&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This will run inside the screen, so you can freely switch out of the screen if you want.&lt;/p&gt;
+
+&lt;h3 id=&quot;switch-out-of-the-screen&quot;&gt;Switch out of the screen&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;Ctrl-a d&lt;/code&gt; (hold Ctrl+a and click d)&lt;/p&gt;
+
+&lt;p&gt;This won’t affect anything running in the screen.&lt;/p&gt;
+
+&lt;h3 id=&quot;see-what-screens-you-currently-have-open&quot;&gt;See what screens you currently have open&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code&gt;$ screen -ls&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Like &lt;code&gt;ls&lt;/code&gt; in a directory, but for screens! Cool!&lt;/p&gt;
+
+&lt;h3 id=&quot;switch-into-a-screen&quot;&gt;Switch into a screen&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code&gt;$ screen -Dr &amp;lt;NAME&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This will now bring your terminal window into a specific screen.&lt;/p&gt;
+
+&lt;h3 id=&quot;close-a-screen&quot;&gt;Close a screen&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;$ exit&lt;/code&gt; from within the screen, or if you want to do it from your regular interface, you can run 
+&amp;gt;&lt;code&gt;$ screen -X -S &amp;lt;NAME&amp;gt; quit&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;???&lt;/h3&gt;
+
+&lt;h3 id=&quot;profit&quot;&gt;Profit!&lt;/h3&gt;
+
+&lt;p&gt;If you’re curious about what more you can do with screen, check out a &lt;a href=&quot;http://www.pixelbeat.org/lkdb/screen.html&quot;&gt;helpful guide&lt;/a&gt; or (if you’re brave) &lt;a href=&quot;http://linux.die.net/man/1/screen&quot;&gt;the documentation&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 30 Jun 2015 22:58:15 -0400</pubDate>
+        <link>https://www.razi.xyz/2015/06/30/screen-tutorial.html</link>
+        <guid isPermaLink="true">https://www.razi.xyz/2015/06/30/screen-tutorial.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Swarthmore Course Review Launch</title>
+        <description>&lt;p&gt;Long story short: a group of students got together and built something pretty awesome, the &lt;a href=&quot;https://www.swatcoursereview.com/&quot;&gt;Swarthmore Course Review&lt;/a&gt;, or SwatCoRe for short.&lt;/p&gt;
+
+&lt;p&gt;If you’re curious, check out some &lt;a href=&quot;https://www.swatcoursereview.com/help&quot;&gt;FAQs&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;h2 id=&quot;what-is-swatcore&quot;&gt;What is SwatCoRe?&lt;/h2&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;SwatCoRe is a student-led initiative to try to make course information more easily accessible to students. Anyone can review a course, upload a syllabus (look for the  icon), and vote for helpful reviews.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;h2 id=&quot;isnt-this-the-same-as-ratemyprofessor&quot;&gt;Isn’t this the same as RateMyProfessor?&lt;/h2&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Well, kind of. SwatCoRe is more course- than professor-focused, though, as professors may have certain strengths and weaknesses. Also SwatCoRe is locally focused, we hope to build a community of peer reviewers that is more focused on Swarthmore. Have you tried looking for a Swat professor on RMP? Good luck.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;h2 id=&quot;who-can-see-my-reviews&quot;&gt;Who can see my reviews?&lt;/h2&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Anyone with a TriCo (@swarthmore, @haverford, or @brynmawr) email address can sign up for SwatCoRe. As our intention is to benefit the Swarthmore community, we have no intention of publicizing these reviews.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I took a pretty strong stance on requiring users to verify their identities via a school-hosted email address because I didn’t want SwatCoRe to turn into a negative community (à la Yik Yak). SwatCoRe users can pick whatever community-facing name they want (only logged-in users, community members, can view reviews), but ultimately site admins will know who is responsible for any content.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, we haven’t had any issues with content at all so far. At the time of writing, there have been 230 reviews posted and not a single one of them has been rated overall unhelpful (208 helpful reviews!). We publish &lt;a href=&quot;https://www.swatcoursereview.com/stats&quot;&gt;live statistics&lt;/a&gt; so that it’s easy to see just how many people are being helped by your review (~350 users within a month after soft launch).&lt;/p&gt;
+
+&lt;p&gt;The code being deployed is viewable on &lt;a href=&quot;https://github.com/rrshaban/swatcore-dev&quot;&gt;GitHub&lt;/a&gt;. We use Heroku to auto-deploy from a production branch, so what you see is what you get (and it’s super-easy to modify and extend, if you want to fork it).&lt;/p&gt;
+
+&lt;p&gt;I have so much to say about SwatCoRe, a labor of love long pursued, but I hope to take my hands off and watch a community grow. We believe that SwatCoRe will grow to become a real resource for the Swarthmore student body.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 07 Jun 2015 21:31:50 -0400</pubDate>
+        <link>https://www.razi.xyz/2015/06/07/Swarthmore-Course-Review.html</link>
+        <guid isPermaLink="true">https://www.razi.xyz/2015/06/07/Swarthmore-Course-Review.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>ReportIt wins overall prize at TriCo Hackathon</title>
+        <description>&lt;p&gt;I’m pretty thrilled to share that my team won the overall prize at the &lt;a href=&quot;http://hackathon.haverford.edu/&quot;&gt;2015 TriCo Hackathon&lt;/a&gt;. It was my first hackathon, so I wasn’t very sure what to expect, but my friend Sedinam, who was also one of the two other people on my team, talked me into it.&lt;/p&gt;
+
+&lt;p&gt;Overall, the hackathon was a very engaging experience. I learned a lot about Flask and the general concept of a web app, but I also learned a lot about hackathon culture. I spent most of my time trying to build up a working app, unaware that I would be judged not on what we had built but on a two-minute demo. That being said, we managed to build a pretty cool, mostly functioning app that now lives &lt;a href=&quot;https://github.com/rrshaban/ReportIt&quot;&gt;on GitHub&lt;/a&gt;. Below is the blurb I wrote up about it:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ReportIt was developed by three Swarthmore students to help citizens communicate directly with people in power. It utilizes the power of the crowd to give citizens and their communities a stronger, more public voice.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We chose to make a Web app because of its broad accessibility. Not everyone has a cell phone, but with initiatives like Internet.org, internet access is quickly becoming a global reality. To allow for technological variation, users can submit reports online, via smartphone, or by SMS text messaging. The online platform allows people to report breakdowns in infrastructure and public services, information on disaster relief, corruption, and other issues. All submitted complaints are categorized and mapped using the Google Maps API so that people can easily see what problems are common in their city or region, even if their country does not have a widely used address system. This allows people to see what kinds of services are needed in the region and how they can help, as well as to help them hold their public officials accountable.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We offer an interactive administrator dashboard to help officials see what problems are trending in their region and to help them communicate directly with citizens. There is also a community user dashboard to enable community members to communicate with officials and each other and to further allow easy mobilization to solve problems.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Built by Razi Shaban (@rrshaban), Sedinam Worlanyo (@sedinam), and Amy Han (@raizel17).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ReportIt is built with Flask, SQLite3, Jinja2, gmaps.js, jQuery, and (regretfully) Bootstrap.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;https://github.com/rrshaban/ReportIt&quot;&gt;https://github.com/rrshaban/ReportIt&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Below are some pictures of ReportIt:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/header.png&quot; alt=&quot;Header&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/trending.png&quot; alt=&quot;Trending&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/topics.png&quot; alt=&quot;Topics&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/dashboard.png&quot; alt=&quot;Dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/interface.png&quot; alt=&quot;Interface&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We did &lt;a href=&quot;http://cs.swarthmore.edu/info/csnews/tricohack.html&quot;&gt;a writeup&lt;/a&gt; for the Swarthmore CS department page and the Philly Inquirer wrote up &lt;a href=&quot;http://articles.philly.com/2015-01-27/news/58474921_1_college-campuses-food-app-haverford-college&quot;&gt;an article&lt;/a&gt; about the hackathon.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 24 Feb 2015 19:47:07 -0500</pubDate>
+        <link>https://www.razi.xyz/2015/02/24/reportit-hackathon.html</link>
+        <guid isPermaLink="true">https://www.razi.xyz/2015/02/24/reportit-hackathon.html</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

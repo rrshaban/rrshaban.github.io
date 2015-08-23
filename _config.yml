@@ -1,0 +1,12 @@
+# Site settings
+title: Razi Shaban
+email: rshaban1@swarthmore.edu
+description: > # this means to ignore newlines until "baseurl:"
+  Swarthmore 2016 CS/Linguistics
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "https://www.razi.xyz" # the base hostname & protocol for your site
+# twitter_username: razishaban
+github_username:  rrshaban
+
+# Build settings
+markdown: kramdown
