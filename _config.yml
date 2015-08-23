@@ -10,3 +10,6 @@ github_username:  rrshaban
 
 # Build settings
 markdown: kramdown
+
+gems:
+  - jekyll-sitemap
