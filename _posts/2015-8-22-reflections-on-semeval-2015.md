@@ -2,7 +2,7 @@
 layout: post
 title: Reflections on SemEval2015
 date: 2015-8-22 02:15:20
-categories:
+categories: project
 ---
 
 

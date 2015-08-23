@@ -2,7 +2,7 @@
 layout: post
 title: "Screen in two minutes"
 date: 2015-07-01 02:58:15
-categories:
+categories: tutorial
 ---
 
 I wrote up a quick how-to that I wished I had found when I was first learning screen, instead of having to navigate the [vaguely terrifying documentation](http://linux.die.net/man/1/screen) ("Each virtual terminal provides the functions of a DEC VT100 terminal and, in addition, several control functions from the ISO 6429 (ECMA 48, ANSI X3.64) and ISO 2022 standards (e.g. insert/delete line and support for multiple character sets)").

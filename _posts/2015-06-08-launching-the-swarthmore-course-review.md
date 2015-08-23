@@ -2,7 +2,7 @@
 layout: post
 title: "Swarthmore Course Review Launch"
 date: 2015-06-08 01:31:50
-categories:
+categories: project
 ---
 
 Long story short: a group of students got together and built something pretty awesome, the [Swarthmore Course Review](https://www.swatcoursereview.com/), or SwatCoRe for short.

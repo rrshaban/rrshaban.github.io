@@ -2,7 +2,7 @@
 layout: post
 title: "ReportIt wins overall prize at TriCo Hackathon"
 date: 2015-02-25 00:47:07
-tags:
+tags: project
 ---
 
 I'm pretty thrilled to share that my team won the overall prize at the [2015 TriCo Hackathon](http://hackathon.haverford.edu/). It was my first hackathon, so I wasn't very sure what to expect, but my friend Sedinam, who was also one of the two other people on my team, talked me into it. 

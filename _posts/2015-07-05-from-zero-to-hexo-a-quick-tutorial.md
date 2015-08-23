@@ -2,7 +2,7 @@
 layout: post
 title:  "From zero to Hexo: a quick tutorial"
 date:   2015-07-05 02:15:20
-categories: 
+categories: tutorial
 ---
 
 [Hexo](https://github.com/hexojs/hexo) bills itself as a "A fast, simple & powerful blog framework", but I was blown away by how quickly I was able to get Hexo up and running. The main issue I had was finding the information I needed all in one place (this has [been](https://s1van.github.io/tags/tutorial/) [done](http://jdpaton.github.io/2012/11/05/setup-hexo/) [before](http://jr0cket.co.uk/2014/04/getting-started-with-hexo---a-modern-static-site-generator.html), with varying success). 
