@@ -6,7 +6,7 @@ categories: project
 ---
 
 
-As a part of the Natural Language Processing class I took at Swarthmore last fall (2014), teams of students competed to build machine-learning models that could accurately predict the sentiment of Twitter data for [SemEval 2015](http://alt.qcri.org/semeval2015/), the International Workshop on Semantic Evaluation. Given that I spent a summer building commercial machine classifiers, I've had some time to reflect on the first machine learning model I built.
+As a part of the Natural Language Processing class I took with Rich Wicentowski last fall, teams of students competed to build machine-learning models that could accurately predict the sentiment of Twitter data for [SemEval 2015](http://alt.qcri.org/semeval2015/), the International Workshop on Semantic Evaluation. Given that I spent a summer building commercial machine classifiers, I've had some time to reflect on the first machine learning model I built.
 
 Given that we had been exposed to natural language processing for only a couple months, our results were fairly impressive: our best model was predicted sentiment with an F-score of 57.2, which is pretty close to the industry standard. The winners of SemEval 2015, out of [over 40 teams](http://alt.qcri.org/semeval2015/cdrom/pdf/SemEval078.pdf), was Bauhaus University, Weimar with an [F-score of 64.84](http://alt.qcri.org/semeval2015/cdrom/pdf/SemEval097.pdf). 
 
