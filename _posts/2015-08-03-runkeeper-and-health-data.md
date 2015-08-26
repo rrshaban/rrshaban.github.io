@@ -13,9 +13,16 @@ My first half marathon, as organized by Runkeeper.
 
 ![Runkeeper visualization of my SF half marathon](/assets/sf_half.png)
 
-Here's now my training regimen, as organized and presented by Runkeeper. Note that the different colored bars represent different activities: green is running, red is hiking, and yellow is biking. 
+<br />
+<br />
+
+Here's my training regimen, as organized and presented by Runkeeper. Note that the different colored bars represent different activities: green is running, red is hiking, and yellow is biking. 
+
+<br />
 
 ![Runkeeper visualization of training regimen leading up to the marathon](/assets/runkeeper_overview.png)
+
+<br />
 
 Having almost real-time data about my runs kept me honest and supported me when I was doubting that work worked. As someone who had never run before, this kind of visualization made the struggle more easily appreciated; it made tangible my efforts. 
 
