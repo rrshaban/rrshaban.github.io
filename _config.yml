@@ -13,4 +13,4 @@ markdown: kramdown
 
 gems:
   - jekyll-sitemap
-  - jekyll-font-awesome
+  # - jekyll-font-awesome
