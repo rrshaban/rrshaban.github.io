@@ -57,7 +57,7 @@ This serves as a reminder that when it comes to machine learning, the models are
 If you're curious to try deep dreaming yourself, K.P. Kaiser put together [a pretty phenomenal walkthrough of that code](http://www.kpkaiser.com/machine-learning/diving-deeper-into-deep-dreams/), which is the basis for [my annotated version](https://github.swarthmore.edu/DeepLearningCS93/pycaffe/blob/master/deepdream.py) of the deep dream code. You'll need to install Caffe, which is a real pain, but fortunately has already been done on the Swarthmore CS lab machines (you're welcome). 
 
 
-If you want to get a closer look at each of the layers, check out my deep dream output for the [image recognition dataset]() and the [places dataset](http://imgur.com/a/w3xsz), or [make your own](http://deepdreamgenerator.com/).
+If you want to get a closer look at each of the layers, check out my deep dream output for the [image recognition dataset](http://imgur.com/a/bi6uJ) and the [places dataset](http://imgur.com/a/w3xsz), or [make your own](http://deepdreamgenerator.com/).
 
 <!-- 
 
