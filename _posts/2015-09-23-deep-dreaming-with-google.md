@@ -2,10 +2,10 @@
 layout: post
 title: Deep dreams and neural networks
 date: 2015-09-23 15:35:00
-categories:
+categories: projects
 ---
 
-Many of the latest advances in image and audio processing (Facebook's [DeepFace](https://research.facebook.com/publications/480567225376225/deepface-closing-the-gap-to-human-level-performance-in-face-verification/), for example, or Google's [voice search](http://googleresearch.blogspot.com/2015/09/google-voice-search-faster-and-more.html)) have come from developments in artificial neural networks, or "deep learning"." Neural networks are a type of statistical machine learning model inspired by the workings of the human brain. Like the human brain, their functionings are a little opaque, and we have little idea why they work so well. By exploring Google's Deep Dream visualization approach, this post will introduce you to neural networks and some of the cool things they can do. 
+Many of the latest advances in image and audio processing (Facebook's [DeepFace](https://research.facebook.com/publications/480567225376225/deepface-closing-the-gap-to-human-level-performance-in-face-verification/), for example, or Google's [voice search](http://googleresearch.blogspot.com/2015/09/google-voice-search-faster-and-more.html)) have come from developments in artificial neural networks, or "deep learning." Neural networks are a type of statistical machine learning model inspired by the workings of the human brain. Like the human brain, their functionings are a little opaque, and we have little idea why they work so well. By exploring Google's Deep Dream visualization approach, this post will introduce you to neural networks and some of the cool things they can do. 
 
 
 ![inception_4d_3x3.jpg](/assets/inception_4d_3x3.jpg)
