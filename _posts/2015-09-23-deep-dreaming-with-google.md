@@ -5,53 +5,72 @@ date: 2015-09-23 15:35:00
 categories:
 ---
 
-Many of the latest advances in image and audio processing (think Facebook's [DeepFace](https://research.facebook.com/publications/480567225376225/deepface-closing-the-gap-to-human-level-performance-in-face-verification/) or Apple's [Siri](http://www.wired.com/2014/06/siri_ai/)) have come from developments in neural networks. Neural networks are inspired by the workings of the human brain, and, as with the human brain, we have little idea why they work.
+Many of the latest advances in image and audio processing (Facebook's [DeepFace](https://research.facebook.com/publications/480567225376225/deepface-closing-the-gap-to-human-level-performance-in-face-verification/), for example, or Google's [voice search](http://googleresearch.blogspot.com/2015/09/google-voice-search-faster-and-more.html)) have come from developments in artificial neural networks, or "deep learning"." Neural networks are a type of statistical machine learning model inspired by the workings of the human brain. Like the human brain, their functionings are a little opaque, and we have little idea why they work so well. By exploring Google's Deep Dream visualization approach, this post will introduce you to neural networks and some of the cool things they can do. 
+
 
 ![inception_4d_3x3.jpg](/assets/inception_4d_3x3.jpg)
+*Deep dreaming at Swarthmore*
 
-Neural networks are composed of a series of layers that transform input a certain way – there are lots of different kinds of layers, and computer scientists still aren't quite sure why they work or how best to design a neural network. Google recently released a new design schema they called the [Inception architecture](http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf) (named after exactly what you think – check out their first footnote), which achieved state-of-the-art performance on a standard image recognition task. This architecture is a bit complicated (see below), so some of Google's engineers started experimenting with how to visualize what the neural network does.
+
+My favorite explanation for what it is neural networks are doing comes down to dimensionality reduction. When we input an 32x32 image to a neural network, for example, we are actually inputting a 32x32x3 array of values (x3 for red, green, and blue values). Our vision and object detection systems recognize low-level features, such as corners and edges, as parts of larger features, objects, which we see in images. 
+
+Neural networks, in theory, work the same way. Neural networks are composed of a series of layers that each transform input a certain way (with lots of different kinds of layers). The lowest-level layer takes the raw input and maps it to a slightly different representation; each layer in turn builds on the output of the previous layer. 
+
+Ultimately, what each of these layers is doing is [transforming the geometric space](http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/) of the input data to try to distinguish between different types of features. At lower levels this means aggregating raw pixels into features like lines, corners, and edges; at higher levels this means aggregating corners and edges into squares and triangles and ultimately objects. 
+
+The mathematical processes by which this happens can be hard to comprehend, so a lot of energy has gone into trying to visualize these processes and make them more easily understood. As these networks become more complicated (check out the ["Inception" architecture](http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf) Google used to win ILSVRC 2014 below), it has become harder and harder to map input to output. 
+
 
 ![Inception architecture, screenshot from Google's Inception paper](http://devblogs.nvidia.com/parallelforall/wp-content/uploads/sites/3/2015/08/image6-624x172.png)
+*A map of Google's Inception architecture*
 
-In June, Google published a [blog post](http://googleresearch.blogspot.com/2015/06/inceptionism-going-deeper-into-neural.html) on visualizing the process at each layer in the neural network. We know that lower layers of neural networks pick up simple features, like lines and corners, and successive layers aggregate these features to build up more complex features like shapes and structures. To see which features are being detected by a layer, this visualization approach, now often referred to as Deep Dream, encourages the layers to highlight what they are detecting by passing the output right back through the layer several times. This feedback loop can help us develop an intuition for which features are being detected at which layers.
 
-This is our input image: 
+In June, Google published an example of a new visualization approach that has come to be called [deep dreaming](http://googleresearch.blogspot.com/2015/06/inceptionism-going-deeper-into-neural.html). To visualize the output of each of the layers individually, we create a feedback loop by feeding the output of that layer right back into it. By repeating this process several times, we're essentially tellin the layer to exaggerate whatever transformation it's making to the image, helping us see what patterns the layer is recognizing. 
+
+A trained version of the Inception architecture is easy enough to find [online](https://github.com/BVLC/caffe/wiki/Model-Zoo) – if you'd like to follow along with the process or run your own deep dreams, I've added some annotations to K.P. Kaiser's heavily-annotated version of the Deep Dream script [here](https://github.com/rrshaban/deep/blob/master/deepdream/deepdream.py). You'll need to install Caffe, which can be a pain – I've been running it on the Swarthmore CS lab cluster, which has been a blessing. 
+
+Here's the input image we'll feed into our neural network:
+
 
 ![Input image, the view from Alice Paul dormitory at Swarthmore](/assets/ap.jpg)
+*Input image, the view of Swarthmore from Alice Paul dormitory*
 
-Here's what it looks like throughout the Inception architecture:
-
-<!-- ## Dream output -->
-
-
-<br />
+Now we can look at what deep dream output looks like for at low levels at six octaves (that is, our feedback loop has passed through the layer six times, exaggerating the features detected).
 
 #### Low-layer dream output
 
 ![conv2_3x3_reduce.jpg](/assets/bvlc_googlenet/conv2_3x3_reduce.jpg)
 
+It's hard to interpret this output literally, but what we can see is the structural patterns that the layer is exaggerating. This layer (`conv2_3x3_reduce`) seems to act on lines and flows, creating a brush-like effect.
+
 ![conv2_norm2.jpg](/assets/bvlc_googlenet/conv2_norm2.jpg)
 
-<br />
+This layer (`conv2_norm2`) appears to be starting to detect corners, arches, and other patterns formed by combining simple lines with corners. It doesn't seem to be creating any macro patterns just yet, but these are the kinds of low-level features that are combined to recognize larger features. 
+
 
 #### Mid-layer dream output
 
 ![inception_3b_3x3_reduce.jpg](/assets/bvlc_googlenet/inception_3b_3x3_reduce.jpg)
 
+Near the middle of the network we start to see combinations of low-level features into distinct patterns that start to resemble objects. Note that not only is the layer (`inception_3b_3x3_reduce`) exaggerating borders, but it is also starting to generate features (the pair of eyes at the top left of David Kemp dormitory). 
+
 ![pool3_3x3_s2.jpg](/assets/bvlc_googlenet/pool3_3x3_s2.jpg)
 
-<br />
+As we start to pool together more features in higher-level layers (this one is `pool3_3x3_s2`), we can start to see why this visualization approach has been called Deep Dream. One of the effects of the feedback loop that we have constructed is that slight suspicions the model may have that something exists are exaggerated until we start to see these canine hallucinations. 
+
+If you're curious why there are so many dogs in the picture, it's important to remember that the neural network is revealing to us what it has learned: the training model used to generate these pictures, BVLC GoogLeNet, was trained on [ILSVRC2012](http://www.image-net.org/challenges/LSVRC/2014/), which includes many pictures of animals. We'll look at some output from a different data set after the next two pictures, which illustrate some of the different kinds of patterns grouped in higher-level layers. 
 
 #### Higher-layer dream output
 
 ![inception_4d_pool_proj.jpg](/assets/bvlc_googlenet/inception_4d_pool_proj.jpg)
 
+In some of the higher layers (which have access to the feature transformations of all previous layers via their input), we start to see the more complicated patterns that gave GoogLeNet its edge: in this layer's deep dream output (`inception_4d_pool_proj`) we can see a combination of a variety of features across the range of the image.
+
 ![inception_4d_3x3_reduce.jpg](/assets/bvlc_googlenet/inception_4d_3x3_reduce.jpg)
 
+The hope of researchers is that these kinds of specific micro-level hallucinations are evidence of a comprehensive understanding in a higher layer (`inception_4d_3x3_reduce`) of local information interpreted by lower layers. By enhancing recognized objects through the deep dream feedback loop, we have allowed the neural network's curiousity to run wild. 
 
-If you're curious why there are so many dogs in the picture, it's important to remember that the neural network is revealing to us what it has learned: the training model used to generate these pictures, BVLC GoogLeNet, was trained on [ILSVRC2012](http://www.image-net.org/challenges/LSVRC/2014/), which includes many pictures of animals. Deep dream images from models trained on a places dataset, [Places205-GoogLeNet](http://places.csail.mit.edu/downloadCNN.html), highlight different features:
-
-<br />
+As mentioned above, the objects and features that the neural network can recognize are dependent on the training set used to train the neural network. The model learns to encode the input it has been given, as our learning environments shape our understanding. Deep dreem images from models trained on a places dataset, [Places205-GoogLeNet](http://places.csail.mit.edu/downloadCNN.html), highlight different features:
 
 <!-- ## Places205-GoogLeNet dream output -->
 
@@ -60,41 +79,39 @@ If you're curious why there are so many dogs in the picture, it's important to r
 
 ![conv2_norm2.jpg](/assets/places_googlenet/conv2_norm2.jpg)
 
+Again, we should be careful not to read too much into the visualizations that appear; rather, they serve to help us understand what kinds of patterns the neural network is learning to look for. This layer is dream output from a convolutional layer (`conv2_norm2`) at the base of Google's Inception architecture.
+
 ![inception_3a_pool_proj.jpg](/assets/places_googlenet/inception_3a_pool_proj.jpg)
 
-<br />
+One way to abstract the output of deep dream is as revealing to us the filter being passed over the data, or the transformation being applied to the geometric [space](http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/) the data occupies. 
 
 #### Mid-layer dream output
 
 
 ![inception_3b_pool.jpg](/assets/places_googlenet/inception_3b_pool.jpg)
 
+Again, mid-level layers seem to aggregate features selected by low-level layers.
+
 ![pool3_3x3_s2.jpg](/assets/places_googlenet/pool3_3x3_s2.jpg)
 
-<br />
+As these patterns combine at higher levels, we start to see some gorgeous visualizations. 
+
 
 #### High-layer dream output
 
 
 ![inception_4a_output.jpg](/assets/places_googlenet/inception_4a_output.jpg)
 
+The different types of hallucinations output by the Places deep dream serves as an important reminder that our models will always be limited to our training data. If we train our model to recognize buildings and geographic features, it will be unable to recognize animals, and vice versa. The hallucinations reflect this.
+
 ![inception_5b_5x5_reduce.jpg](/assets/places_googlenet/inception_5b_5x5_reduce.jpg)
 
+Some critics of neural networks say that their relative performance advantages stem from micro-optimizations made possible by huge computational power (Google and other researchers). A perhaps more significant advantage available to Google is their access to data – with more data to train on, neural networks can be trained to represent larger ranges of input.
 
-This serves as a reminder that when it comes to machine learning, the models are important but the data is even more so.
+That being said, neural networks are incredible tools for learning representations of data and combining data in new and interesting ways (transfer learning is suuuuper interesting). A [paper](http://arxiv.org/pdf/1508.06576v2.pdf) was recently published about applying the style of one image to another, leading to some [awesome visualizations](http://www.kpkaiser.com/programming/using-neural-networks-to-generate-paintings/). 
 
-If you're curious to try deep dreaming yourself, K.P. Kaiser put together [a pretty phenomenal walkthrough of that code](http://www.kpkaiser.com/machine-learning/diving-deeper-into-deep-dreams/), which is the basis for [my annotated version](https://github.swarthmore.edu/DeepLearningCS93/pycaffe/blob/master/deepdream.py) of the deep dream code. You'll need to install Caffe, which is a real pain, but fortunately has already been done on the Swarthmore CS lab machines (you're welcome). 
+If you want to get a closer look at each layer of the deep dream output, check out my output from one run on the [image recognition dataset](http://imgur.com/a/bi6uJ) and the [places dataset](http://imgur.com/a/w3xsz), or [dream your own picture](http://deepdreamgenerator.com/).
 
-
-If you want to get a closer look at each of the layers, check out my deep dream output for the [image recognition dataset](http://imgur.com/a/bi6uJ) and the [places dataset](http://imgur.com/a/w3xsz), or [make your own](http://deepdreamgenerator.com/).
-
+<!--
 [Want to run this yourself?](https://github.swarthmore.edu/DeepLearningCS93/pycaffe/blob/master/deepdream.py)
-
-<!-- 
-
-
-Documentation for Caffe in Python is [sparse](https://github.com/BVLC/caffe/issues/1774) and a bit of a [work in progress](https://github.com/BVLC/caffe/pull/1703). To try to get a feel for how to use Caffe, I went looking for examples of pyCaffe in the wild and found Google's [Deep Dream](http://googleresearch.blogspot.ch/2015/06/inceptionism-going-deeper-into-neural.html), which they put on [Github](https://github.com/google/deepdream) with some spotty commenting. 
-
-KP Kaiser put together [a pretty phenomenal walkthrough of that code](http://www.kpkaiser.com/machine-learning/diving-deeper-into-deep-dreams/), which is the basis for [my annotated version](https://github.swarthmore.edu/DeepLearningCS93/pycaffe/blob/master/deepdream.py) of the deep dream code.
-
-This led to exploring and trying to understand the Deep Dream code in order to reverse-engineer it. Here's the BVLC GoogleNet Deep Dream @ [2 octaves](http://imgur.com/a/i4CBW) and at [6 octaves](http://imgur.com/a/w3xsz).  -->
+-->
