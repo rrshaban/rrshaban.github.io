@@ -127,8 +127,8 @@ Some critics of neural networks say that their relative performance advantages s
 
 That being said, neural networks are incredible tools for learning representations of data and combining data in new and interesting ways (transfer learning is suuuuper interesting). A [paper](http://arxiv.org/pdf/1508.06576v2.pdf) was recently published about applying the style of one image to another, leading to some [awesome visualizations](http://www.kpkaiser.com/programming/using-neural-networks-to-generate-paintings/).
 
-![KPKAISER](https://raw.githubusercontent.com/kaishengtai/neuralart/master/examples/eiffel_scream_short.gif)
+[![KPKAISER](https://raw.githubusercontent.com/kaishengtai/neuralart/master/examples/eiffel_scream_short.gif)](https://github.com/kaishengtai/neuralart)
 
-*The style of Munch's _The Scream_ being applied to a picture of the Eiffel Tower*
+*The style of Munch's "The Scream" being applied to a picture of the Eiffel Tower*
 
 If you want to get a closer look at each layer of the deep dream output, check out output from one run on the [image recognition dataset](http://imgur.com/a/bi6uJ) and the [places dataset](http://imgur.com/a/w3xsz), or [dream your own picture](http://deepdreamgenerator.com/). Or, you can [run this yourself](https://github.com/rrshaban/deep/blob/master/deepdream/deepdream.py)!
