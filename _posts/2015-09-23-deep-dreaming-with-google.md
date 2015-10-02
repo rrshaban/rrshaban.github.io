@@ -24,7 +24,7 @@ The mathematical processes by which this happens can be hard to comprehend, so a
 
 ![Inception architecture, screenshot from Google's Inception paper](http://devblogs.nvidia.com/parallelforall/wp-content/uploads/sites/3/2015/08/image6-624x172.png)
 
-*A map of Google's Inception architecture*
+*A simplified map of Google's Inception architecture*
 
 
 In June, Google published an example of a new visualization approach that has come to be called [deep dreaming](http://googleresearch.blogspot.com/2015/06/inceptionism-going-deeper-into-neural.html). To visualize the output of each of the layers individually, we create a feedback loop by feeding the output of that layer right back into it. By repeating this process several times, we're essentially telling the layer to exaggerate whatever transformation it's making to the image, helping us see what patterns the layer is recognizing. 
