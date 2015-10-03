@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Seeing through Google's eyes: neural nets and computer vision
+title: Seeing through Google's eyes\: neural nets and computer vision
 date: 2015-09-23 15:35:00
 categories:
 ---
