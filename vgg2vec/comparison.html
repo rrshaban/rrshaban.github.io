@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Figure Four: Comparing Multiple Artists with VGG2Vec</title>
+
+  <script src="/assets/js/jquery-1.8.3.min.js"></script>
+  <script src="/assets/js/d3.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+
+
+
+  <style>
+  svg {
+    border: 1px solid #333;
+    margin-top: 20px;
+  }
+
+  </style>
+
+  <script>
+
+
+var Y;
+var embedding;
+
+function updateEmbedding() {
+  var Y = data;
+
+  svg.selectAll('.u')
+    .data(labels)
+    .attr("transform", function(d, i) { return "translate(" +
+                                          ((Y[i][0]*200*ss + tx) + 400) + "," +
+                                          ((Y[i][1]*250*ss + ty) + 400) + ")"; });
+}
+
+var tx=0, ty=0;
+var ss=1;
+function zoomHandler() {
+  tx = d3.event.translate[0];
+  ty = d3.event.translate[1];
+  ss = d3.event.scale;
+}
+
+
+
+var svg;
+function drawEmbedding(labels) {
+
+    $("#embed").empty();
+    var div = d3.select("#embed");
+    
+    svg = div.append("svg") // svg is global [karpathy]
+    .attr("width", 1400)
+    .attr("height", 800);
+
+    var g = svg.selectAll(".b")
+      .data(labels)
+      .enter().append("g")
+      .attr("class", "u");
+    
+    g.append("svg:image")
+      .attr('x', 0)
+      .attr('y', 2)
+      .attr('width', 70)
+      .attr('height', 70)
+      .attr("xlink:href", function(d) { return "/assets/thumbs/" + d + '.jpg'; })
+
+    g.append("text")
+      .attr("text-anchor", "top")
+      .attr("font-size", 10)
+      .attr("fill", "#333")
+      .text(function(d) { return d; });
+
+    var zoomListener = d3.behavior.zoom()
+      .scaleExtent([0.1, 10])
+      .center([0,0])
+      .on("zoom", zoomHandler);
+    zoomListener(svg);
+}
+
+// perplexities = { 5, 8, 10, 12 }
+
+var labels;
+var data;
+$(window).load(function() {  
+  $.getJSON( "/assets/json/comp_labels.json", function( j ) {
+      labels = j;
+  
+
+    $.getJSON( "/assets/json/comp_12_embedding.json", function( j ) {
+      data = j;
+      
+      drawEmbedding(labels);
+      setInterval(updateEmbedding, 0);
+    });
+  });
+});
+
+  </script>
+
+</head>
+
+<body>
+
+
+
+<!-- Everything important is above this line -->
+
+
+
+
+
+<div style="margin-left:auto; margin-right:auto; text-align:center; font-family: arial;">
+
+<div id="top">Two-dimensional embedding of the high-dimensional vector representations of a set of paintings by various painters. <br />
+
+Feel free to drag and zoom.
+
+</div>
+
+
+<div id="embed"></div>
+<script>
+function make_dl(){
+  // Make 'download' a downloadable svg
+
+  var svg = document.getElementById("embed");
+  //get svg source.
+  var serializer = new XMLSerializer();
+  var source = serializer.serializeToString(svg);
+
+  //add name spaces.
+  if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
+  if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+      source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+  }
+
+  //add xml declaration
+  source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+  //convert svg source to URI data scheme.
+  var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+
+  //set url value to a element's href attribute.
+  document.getElementById("download").href = url;
+}
+  
+
+</script>
+<!-- <button onclick="make_dl()">Click me</button>
+<a href='' id="download">download</a>
+ -->
+<div id="cost" style="text-align:left; font-family: Impact;">Razi Shaban</div>
+
+
+</div>
+</body>
+</html>

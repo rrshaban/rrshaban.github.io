@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>tSNEJS demo</title>
+
+  <script src="/assets/js/jquery-1.8.3.min.js"></script>
+  <script src="/assets/js/d3.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+
+
+
+  <style>
+  svg {
+    border: 1px solid #333;
+    margin-top: 20px;
+  }
+
+  </style>
+
+  <script>
+// most of this javascript is based on Karpathy's t-SNE demo, though
+// it doesn't actully employ tsnejs (browsers can't handle fat json)
+
+var Y;
+var embedding;
+
+function updateEmbedding() {
+  var Y = data;
+
+  svg.selectAll('.u')
+    .data(labels)
+    .attr("transform", function(d, i) { return "translate(" +
+                                          ((Y[i][0]*250*ss + tx) + 400) + "," +
+                                          ((Y[i][1]*250*ss + ty) + 400) + ")"; });
+}
+
+var tx=0, ty=0;
+var ss=1;
+function zoomHandler() {
+  tx = d3.event.translate[0];
+  ty = d3.event.translate[1];
+  ss = d3.event.scale;
+}
+
+
+
+var svg;
+function drawEmbedding(labels) {
+
+    $("#embed").empty();
+    var div = d3.select("#embed");
+    
+    svg = div.append("svg") // svg is global [karpathy]
+    .attr("width", 1400)
+    .attr("height", 800);
+
+    var g = svg.selectAll(".b")
+      .data(labels)
+      .enter().append("g")
+      .attr("class", "u");
+    
+    g.append("svg:image")
+      .attr('x', 0)
+      .attr('y', 2)
+      .attr('width', 80)
+      .attr('height', 80)
+      .attr("xlink:href", function(d) { return "/assets/thumbs/" + d + '.jpg'; })
+
+    g.append("text")
+      .attr("text-anchor", "top")
+      .attr("font-size", 10)
+      .attr("fill", "#333")
+      .text(function(d) { return d; });
+
+    var zoomListener = d3.behavior.zoom()
+      .scaleExtent([0.1, 10])
+      .center([0,0])
+      .on("zoom", zoomHandler);
+    zoomListener(svg);
+}
+
+
+var labels;  
+var data;
+$(window).load(function() {  
+  $.getJSON( "/assets/json/fp_labels.json", function( j ) {
+      labels = j;
+  
+
+    $.getJSON( "/assets/json/fp5_13emb.json", function( j ) {
+      data = j;
+      
+      drawEmbedding(labels);
+      setInterval(updateEmbedding, 0);
+    });
+  });
+});
+
+  </script>
+
+</head>
+
+<body>
+
+
+
+<!-- Everything important is above this line -->
+
+
+
+
+
+<div style="margin-left:auto; margin-right:auto; text-align:center; font-family: arial;">
+
+<div id="top">t-SNE running on <a href="http://www.socher.org/index.php/Main/ImprovingWordRepresentationsViaGlobalContextAndMultipleWordPrototypes">50-dimensional word vectors</a>. Uses <a href="https://github.com/karpathy/tsnejs">tsnejs</a> library.</div>
+
+
+<div id="embed"></div>
+<script>
+function make_dl(){
+  // Make 'download' a downloadable svg
+
+  var svg = document.getElementById("embed");
+  //get svg source.
+  var serializer = new XMLSerializer();
+  var source = serializer.serializeToString(svg);
+
+  //add name spaces.
+  if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
+  if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+      source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+  }
+
+  //add xml declaration
+  source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+  //convert svg source to URI data scheme.
+  var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+
+  //set url value to a element's href attribute.
+  document.getElementById("download").href = url;
+}
+  
+
+</script>
+<button onclick="make_dl()">Click me</button>
+<a href='' id="download">download</a>
+
+<div id="cost" style="text-align:left; font-family: Impact;"></div>
+
+
+</div>
+</body>
+</html>
