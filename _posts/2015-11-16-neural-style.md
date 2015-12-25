@@ -45,5 +45,4 @@ Other people have also experimented with Neural Style. Below is one of my favori
 
 <iframe src="https://player.vimeo.com/video/139123754" width="800" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-
-
+If you want to run Neural Style yourself, Justin Johnson has put up an implementation in Torch on [GitHub](https://github.com/jcjohnson/neural-style/).
