@@ -1,4 +1,4 @@
-# [razi.xyz](razi.xyz)
+# [razishaban.com](razishaban.com)
 
 
 this one's built with Jekyll
