@@ -1,3 +1,10 @@
+---
+layout: post
+title: "Leaving Google"
+date: 2022-01-08 07:47:07
+tags: project
+---
+
 I recently left Google after five and a half years working as a software engineer. 
 
 
