@@ -1,3 +1,12 @@
+---
+layout: post
+title: "(Art)ificial Art"
+date: 2023-02-02 07:47:07
+tags: project
+---
+
+Some experiments in (Art)ificial Art : generative machine learning algorithms.
+
 Stable Horde: Stable Diffusion Image Generation
 https://stablehorde.net/
 https://github.com/db0/AI-Horde
