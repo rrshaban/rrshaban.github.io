@@ -1,4 +1,11 @@
-Hi,
+---
+layout: post
+title: "Exploring ChatGPT in Arabic"
+date: 2023-02-01 11:11:11
+tags: project
+---
+
+An exploration of what ChatGPT can handle with Arabic language.
 
 <img width="740" alt="image" src="https://user-images.githubusercontent.com/9829375/216008654-b42d5695-782e-43e1-bdeb-014f7011dcba.png">
 
