@@ -1,11 +1,11 @@
 # Site settings
 title: Razi Shaban
-email: 
+email: razi@medicinalmotion.com
 description: > # this means to ignore newlines until "baseurl:"
   Swarthmore 2016 CS/Linguistics
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://www.razishaban.com" # the base hostname & protocol for your site
-twitter_username: razishaban
+twitter_username: medicinalmotion
 github_username:  rrshaban
 
 # Build settings
